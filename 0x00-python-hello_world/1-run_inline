@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 #!/bin/bash
 echo python3 -c "$PYCODE"
+=======
+#!/bin/bash
+python3 -c $PYCODE
+>>>>>>> refs/remotes/origin/main
