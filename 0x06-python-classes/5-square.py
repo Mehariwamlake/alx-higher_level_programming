@@ -1,7 +1,16 @@
 #!/usr/bin/python3
+""" creates class Square """
+
+
 class Square:
+    """ Square class"""
     def __init__(self, size=0):
-        self.size = size
+        if type(size) != int:
+            raise TypeError("size must be an integer")
+        elif size < 0:
+            raise ValueError("size must be >= 0")
+        else:
+            self.__size = size
 
     @property
     def size(self):
@@ -13,16 +22,16 @@ class Square:
             raise TypeError("size must be an integer")
         elif value < 0:
             raise ValueError("size must be >= 0")
-        self.__size = value
+        else:
+            self.__size = value
 
     def area(self):
-        a = self.__size * self.__size
-        return a
+        return self.__size * self.__size
 
     def my_print(self):
         if self.__size == 0:
-            print("")
-        for i in range(0, self.__size):
-            for j in range(0, self.__size):
-                print("#", end="")
-            print()
+            print('')
+        for s in range(self.__size):
+            for os in range(self.__size):
+                print('#', end='')
+            print('')
