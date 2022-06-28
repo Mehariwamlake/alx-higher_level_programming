@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 def main():
     import sys
+
     n = len(sys.argv) - 1
     if n > 1:
         print(f"{n} arguments:")
