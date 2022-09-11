@@ -1,22 +1,24 @@
 #!/usr/bin/python3
-""" filter states by name """
+"""
+prints the State object with the name passed as argument from a database
+"""
 
-from model_state import Base, State
+import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-import sys
+from sys import argv
+from model_state import Base, State
 
-if __name__ == '__main__':
-    engine = create_engine('mysql+mysqldb://{}:{}@localhost:3306/{}'
-                           .format(sys.argv[1], sys.argv[2], sys.argv[3]),
-                           pool_pre_ping=True)
-    Base.metadata.create_all(engine)
-    Sessionmaker = sessionmaker(bind=engine)
-    session = Sessionmaker()
-    states = session.query(State)
-    res = states.filter_by(name=sys.argv[4]).first()
-    if res:
-        print(res.id)
+if __name__ == "__main__":
+    eng = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.format(argv[1],
+                                                                    argv[2],
+                                                                    argv[3]))
+    Base.metadata.create_all(eng)
+    Session = sessionmaker(bind=eng)
+    session = Session()
+    state = session.query(State).filter_by(name=argv[4]).first()
+    if state is not None:
+        print(str(state.id))
     else:
         print("Not found")
     session.close()

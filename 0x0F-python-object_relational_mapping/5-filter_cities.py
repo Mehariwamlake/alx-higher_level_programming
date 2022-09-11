@@ -1,18 +1,20 @@
 #!/usr/bin/python3
-''' script for task 5 '''
+"""
+python script that lists all cities from the database hbtn_0e_4_usa
+with specified state name
+"""
 
-
-import sys
 import MySQLdb
-
+from sys import argv
 
 if __name__ == "__main__":
-    db = MySQLdb.connect(host='localhost', port=3306, user=sys.argv[1],
-                         passwd=sys.argv[2], db=sys.argv[3], charset="utf8")
-    cur = db.cursor()
-    cur.execute("""SELECT name FROM cities WHERE (SELECT id FROM states WHERE
-                BINARY name = %s) = state_id""", (sys.argv[4],))
-    states = cur.fetchall()
-    print(", ".join([state[0] for state in states]))
-    cur.close()
+    db = MySQLdb.connect(host="localhost", port=3306, user=argv[1],
+                         passwd=argv[2], db=argv[3], charset="utf8")
+    cursor = db.cursor()
+    cursor.execute("SELECT cities.name FROM cities \
+    JOIN states ON cities.state_id = states.id WHERE states.name LIKE %s \
+    ORDER BY cities.id", (argv[4],))
+    rows = cursor.fetchall()
+    print(", ".join(city[0] for city in rows))
+    cursor.close()
     db.close()
